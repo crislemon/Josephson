@@ -25,18 +25,21 @@ delta = 0.75/27211.6 #SC gap
 N_omega = 2003
 range_omega = 4
 
-
+#number of atoms in each electrode and sites in the gap
 N = 7
 M = 7
 T = 3
 
-t= 1.5
+#hopping between electrodes
+t= 2.0
+phi_1 = 0.0#phase of SC 1
+phi_2 = 0.0#phase of SC 2
 
 ################################################# We solve Dyson's equation
 
 import Green_Chain as GC
 t1=time.time()
-(gg , N, M, T, N_omega , vv, Go, Self2) = GC.Josephson(d, k_F, DOS, delta, N_omega, range_omega, t, N, M, T)
+(gg , N, M, T, N_omega , vv, Go, Self2) = GC.Josephson(d, k_F, DOS, delta, N_omega, range_omega, t, N, M, T, phi_1, phi_2)
 t2 = time.time()
  
 print('The program is finished after', t2 - t1)

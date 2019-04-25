@@ -8,7 +8,7 @@ Created on Mon Oct  1 12:37:27 2018
 #everything in atomic units
 import numpy as np
 
-def Josephson(nstep, k_f, DOS, delta, N_omega, range_omega, t, N, M, T):
+def Josephson(nstep, k_f, DOS, delta, N_omega, range_omega, t, N, M, T, phi_1, phi_2):
     
     # d = nstep*a distance between sites
     
@@ -58,7 +58,7 @@ def Josephson(nstep, k_f, DOS, delta, N_omega, range_omega, t, N, M, T):
     
          #BCS Green's function
         import Free_Gree_loop as FG
-        Go = FG.Free_Green(N, M, T, omega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_interatomic)
+        Go = FG.Free_Green(N, M, T, omega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_interatomic, phi_1, phi_2)
         
         #Solve Dyson's equation
         import Dyson as Dy

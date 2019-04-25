@@ -17,7 +17,7 @@ sqrt = np.sqrt
 exp = np.exp
 
 
-def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_interatomic):
+def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_interatomic, phi_1, phi_2):
 
     G = np.zeros([(N + M + T) * 4,(N + M + T) * 4], dtype=complex)
     g = np.zeros([(N + M + T),(N + M + T), 4, 4], dtype=complex)
@@ -40,7 +40,9 @@ def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_inte
     
     '''First SC electrode'''
     # Non diagonal in atom
-    SS = sqrt(Delta**2 - omega**2)
+    Delta_1 = Delta*exp(1j*phi_1)
+    
+    SS = sqrt(Delta_1**2 - omega**2)
     xi = Fermi_k / (mass_eff * SS)
     
     
@@ -55,15 +57,15 @@ def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_inte
                 g[g_i, g_j, 2, 2] = ( omega * sin(Fermi_k * rr[g_i, g_j]) + SS * cos(Fermi_k * rr[g_i, g_j]) )* factor
                 g[g_i, g_j, 3, 3] = ( omega * sin(Fermi_k * rr[g_i, g_j]) - SS * cos(Fermi_k * rr[g_i, g_j]) )* factor
                     
-                g[g_i, g_j, 0, 3] = - Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
-                g[g_i, g_j, 1, 2] = Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
-                g[g_i, g_j, 2, 1] = Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
-                g[g_i, g_j, 3, 0] = - Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
+                g[g_i, g_j, 0, 3] = - Delta_1 * sin(Fermi_k * rr[g_i, g_j]) * factor
+                g[g_i, g_j, 1, 2] = Delta_1 * sin(Fermi_k * rr[g_i, g_j]) * factor
+                g[g_i, g_j, 2, 1] = Delta_1 * sin(Fermi_k * rr[g_i, g_j]) * factor
+                g[g_i, g_j, 3, 0] = - Delta_1 * sin(Fermi_k * rr[g_i, g_j]) * factor
     
 
     # Diagonal in atom
     omega = lomega + 1j * Damping
-    SS = sqrt(Delta**2 - omega**2)
+    SS = sqrt(Delta_1**2 - omega**2)
     factor_diag = - pi * DOS_o / SS
 
     for g_i in range(N):
@@ -73,16 +75,17 @@ def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_inte
             g[g_i, g_i, 1, 1] = omega * factor_diag
             g[g_i, g_i, 2, 2] = omega * factor_diag
             g[g_i, g_i, 3, 3] = omega * factor_diag
-            g[g_i, g_i, 0, 3] = -Delta * factor_diag
-            g[g_i, g_i, 1, 2] = Delta * factor_diag
-            g[g_i, g_i, 2, 1] = Delta * factor_diag
-            g[g_i, g_i, 3, 0] = -Delta * factor_diag
+            g[g_i, g_i, 0, 3] = -Delta_1 * factor_diag
+            g[g_i, g_i, 1, 2] = Delta_1 * factor_diag
+            g[g_i, g_i, 2, 1] = Delta_1 * factor_diag
+            g[g_i, g_i, 3, 0] = -Delta_1 * factor_diag
 
 
 
     '''Second SC electrode'''
     # Non diagonal in atom
-    SS = sqrt(Delta**2 - omega**2)
+    Delta_2 = Delta*exp(1j*phi_2)
+    SS = sqrt(Delta_2**2 - omega**2)
     xi = Fermi_k / (mass_eff * SS)
     
     
@@ -97,15 +100,15 @@ def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_inte
             g[g_i, g_j, 2, 2] = ( omega * sin(Fermi_k * rr[g_i, g_j]) + SS * cos(Fermi_k * rr[g_i, g_j]) )* factor
             g[g_i, g_j, 3, 3] = ( omega * sin(Fermi_k * rr[g_i, g_j]) - SS * cos(Fermi_k * rr[g_i, g_j]) )* factor
                     
-            g[g_i, g_j, 0, 3] = - Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
-            g[g_i, g_j, 1, 2] = Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
-            g[g_i, g_j, 2, 1] = Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
-            g[g_i, g_j, 3, 0] = - Delta * sin(Fermi_k * rr[g_i, g_j]) * factor
+            g[g_i, g_j, 0, 3] = - Delta_2 * sin(Fermi_k * rr[g_i, g_j]) * factor
+            g[g_i, g_j, 1, 2] = Delta_2 * sin(Fermi_k * rr[g_i, g_j]) * factor
+            g[g_i, g_j, 2, 1] = Delta_2 * sin(Fermi_k * rr[g_i, g_j]) * factor
+            g[g_i, g_j, 3, 0] = - Delta_2 * sin(Fermi_k * rr[g_i, g_j]) * factor
     
 
     # Diagonal in atom
     omega = lomega + 1j * Damping
-    SS = sqrt(Delta**2 - omega**2)
+    SS = sqrt(Delta_2**2 - omega**2)
     factor_diag = - pi * DOS_o / SS
 
     for g_i in range(N+T,N+T+M):
