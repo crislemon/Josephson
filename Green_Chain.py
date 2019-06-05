@@ -48,7 +48,7 @@ def Josephson(nstep, k_f, DOS, delta, N_omega, range_omega, t, N, M, T, phi_1, p
     
     
     import Self_Energy_loop as SL
-    Self2 = SL.Self_Energy(N, M, T, a_interatomic, t)
+    Self2 = SL.Self_Energy(N, M, T, a_interatomic, t, phi_1, phi_2)
     
     GG = np.zeros([4 * (N + T + M) , 4 * (N + T + M), N_omega], dtype=complex)
     

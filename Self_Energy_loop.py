@@ -17,10 +17,12 @@ ui = complex(0.0, 1.0)
 #hoppig between electrodes
 
 
-def Self_Energy(N, M, T, a_interatomic, t):
+def Self_Energy(N, M, T, a_interatomic, t, phi1, phi2):
     
      Self = np.zeros([N + T + M, N + T + M, 4, 4], dtype=complex)
      Self2 = np.zeros([(N + T + M) * 4, (N + T + M) * 4], dtype=complex)
+     
+     t = t*exp(1j*(phi1-phi2))
      
      i = np.arange(N+T+M)
      j = np.arange(1)
@@ -37,37 +39,27 @@ def Self_Energy(N, M, T, a_interatomic, t):
      g_i = N - 1
      g_j = N + T
      
-     Self [g_i, g_j, 0, 0]= t/rr[g_i,g_j]
-     Self [g_i, g_j, 1, 1]= t/rr[g_i,g_j]
-     Self [g_i, g_j, 2, 2]= t/rr[g_i,g_j]
-     Self [g_i, g_j, 3, 3]= t/rr[g_i,g_j]
+#     Self [g_i, g_j, 0, 0]= t/rr[g_i,g_j]
+#     Self [g_i, g_j, 1, 1]= t/rr[g_i,g_j]
+#     Self [g_i, g_j, 2, 2]= t/rr[g_i,g_j]
+#     Self [g_i, g_j, 3, 3]= t/rr[g_i,g_j]
+#     
+#     Self [g_j, g_i, 0, 0]= t/rr[g_j, g_i]
+#     Self [g_j, g_i, 1, 1]= t/rr[g_j, g_i]
+#     Self [g_j, g_i, 2, 2]= t/rr[g_j, g_i]
+#     Self [g_j, g_i, 3, 3]= t/rr[g_j, g_i]
      
-     Self [g_j, g_i, 0, 0]= t/rr[g_j, g_i]
-     Self [g_j, g_i, 1, 1]= t/rr[g_j, g_i]
-     Self [g_j, g_i, 2, 2]= t/rr[g_j, g_i]
-     Self [g_j, g_i, 3, 3]= t/rr[g_j, g_i]
+     Self [g_i, g_j, 0, 2]= t/rr[g_i,g_j]
+     Self [g_i, g_j, 1, 3]= t/rr[g_i,g_j]
+     Self [g_i, g_j, 2, 0]= t/rr[g_i,g_j]
+     Self [g_i, g_j, 3, 1]= t/rr[g_i,g_j]
      
+     Self [g_j, g_i, 0, 2]= t/rr[g_j, g_i]
+     Self [g_j, g_i, 1, 3]= t/rr[g_j, g_i]
+     Self [g_j, g_i, 2, 0]= t/rr[g_j, g_i]
+     Self [g_j, g_i, 3, 1]= t/rr[g_j, g_i]
      
-     
-     
-#     for i_atom in range(N_atoms):
-#         
-#         g_i = int(N_y/2.0) * N_x + (i_atom + borde)
-#         #g_i = int(N_y/2.0) * N_x + (2*i_atom + borde)##### d=2a
-#         theta_i = thetaS[i_atom]
-#         phi_i = phi[i_atom]
-#         
-#         
-#         Self [g_i, g_i, 0, 0]= J*S*cos(theta_i)-U
-#         Self [g_i, g_i, 1, 1]= - J*S*cos(theta_i)-U
-#         Self [g_i, g_i, 2, 2]= - J*S*cos(theta_i)+U
-#         Self [g_i, g_i, 3, 3]= J*S*cos(theta_i)+U
-#         
-#         Self [g_i, g_i, 0, 1]= J*S*sin(theta_i)*exp(-ui*phi_i)
-#         Self [g_i, g_i, 1, 0]= J*S*sin(theta_i)*exp(ui*phi_i)
-#         Self [g_i, g_i, 2, 3]= - J*S*sin(theta_i)*exp(ui*phi_i)
-#         Self [g_i, g_i, 3, 2]= - J*S*sin(theta_i)*exp(-ui*phi_i)
-#         
+            
         
      
             

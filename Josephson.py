@@ -26,14 +26,14 @@ N_omega = 2003
 range_omega = 4
 
 #number of atoms in each electrode and sites in the gap
-N = 7
-M = 7
+N = 6
+M = 6
 T = 3
 
 #hopping between electrodes
-t= 2.0
+t= 5.0
 phi_1 = 0.0#phase of SC 1
-phi_2 = 0.0#phase of SC 2
+phi_2 = pi/4.0#phase of SC 2
 
 ################################################# We solve Dyson's equation
 
@@ -68,21 +68,28 @@ for i in range((N + T + M)):
 spectro_1 = spectro[N-1, :]#spectrum in the border
 spectro_2 = spectro[N+T, :]#spectrum in the border
 spectro_3 = spectro[N-2, :]#spectrum in "bulk"
+spectro_4 = spectro[N-3, :]#spectrum in "bulk"
 plt.figure(1)
 plt.plot(vv, spectro_1, linewidth=1.0, label = 'total')
 plt.xlabel('meV')
 plt.ylabel('PDOS')
+plt.title('Edge SC 1')
 
 
 plt.figure(2)
 plt.plot(vv, spectro_2, linewidth=1.0, label = 'total')
 plt.xlabel('meV')
 plt.ylabel('PDOS')
+plt.title('Edge SC 2')
 
 plt.figure(3)
-plt.plot(vv, spectro_3, linewidth=1.0, label = 'total')
+plt.plot(vv, spectro_1, linewidth=1.0, label = 'edge')
+plt.plot(vv, spectro_3, linewidth=1.0, label = 'edge - 1')
+plt.plot(vv, spectro_4, linewidth=1.0, label = 'edge -2 ')
 plt.xlabel('meV')
 plt.ylabel('PDOS')
+plt.title('SC 1')
+plt.legend()
 
 
 

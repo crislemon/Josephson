@@ -41,6 +41,7 @@ def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_inte
     '''First SC electrode'''
     # Non diagonal in atom
     Delta_1 = Delta*exp(1j*phi_1)
+    Delta_1 = Delta
     
     SS = sqrt(Delta_1**2 - omega**2)
     xi = Fermi_k / (mass_eff * SS)
@@ -85,6 +86,7 @@ def Free_Green(N, M, T, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_inte
     '''Second SC electrode'''
     # Non diagonal in atom
     Delta_2 = Delta*exp(1j*phi_2)
+    Delta_2 = Delta
     SS = sqrt(Delta_2**2 - omega**2)
     xi = Fermi_k / (mass_eff * SS)
     
